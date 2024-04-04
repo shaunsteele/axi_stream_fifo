@@ -14,6 +14,7 @@ module RdPtr # (
   output var logic  [ALEN:0]    o_rptr,
   input var         [ALEN:0]    i_wptr,
   output var logic              o_rempty,
+  output var logic              o_runderflow,
   output var logic              o_ram_ren
 );
 
@@ -64,6 +65,19 @@ always_ff @(posedge clk) begin
       o_rempty <= i_wptr == o_rptr;
     end else begin
       o_rempty <= next_rempty & i_ren;
+    end
+  end
+end
+
+// Underflow Latch
+always_ff @(posedge clk) begin
+  if (!rstn) begin
+    o_runderflow <= 0;
+  end else begin
+    if (i_ren & o_rempty) begin
+      o_runderflow <= 1;
+    end else begin
+      o_runderflow <= o_runderflow;
     end
   end
 end
