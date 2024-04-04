@@ -14,6 +14,7 @@ module WrPtr # (
   output var logic  [ALEN:0]    o_wptr,
   input var         [ALEN:0]    i_rptr,
   output var logic              o_wfull,
+  output var logic              o_woverflow,
   output var logic              o_ram_wen
 );
 
@@ -67,6 +68,19 @@ always_ff @(posedge clk) begin
       o_wfull <= i_wen;
     end else begin
       o_wfull <= o_wfull;
+    end
+  end
+end
+
+// Overflow Latch
+always_ff @(posedge clk) begin
+  if (!rstn) begin
+    o_woverflow <= 0;
+  end else begin
+    if (i_wen & o_wfull) begin
+      o_woverflow <= 1;
+    end else begin
+      o_woverflow <= o_woverflow;
     end
   end
 end

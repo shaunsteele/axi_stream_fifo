@@ -1,8 +1,8 @@
-// TbRdPtr.sv
+// TbWrPtr.sv
 
 `default_nettype none
 
-module TbRdPtr;
+module TbWrPtr;
 
 
 /* Clock Generation */
@@ -23,33 +23,36 @@ initial begin
   rstn = 1;
 end
 
-/* DUT Instantiation */
+/* DUT */
 // Parameters
 parameter int ALEN = 8;
 parameter int INCR = 1;
 
 // Inputs
-bit ren;
-bit [ALEN:0]    wptr;
+bit wen;
+bit [ALEN:0]    rptr;
 
 // Outputs
-bit [ALEN-1:0]  raddr;
-bit [ALEN:0]    rptr;
-bit             rempty;
-bit             ram_ren;
+bit [ALEN-1:0]  waddr;
+bit [ALEN:0]    wptr;
+bit             wfull;
+bit             woverflow;
+bit             ram_wen;
 
-RdPtr # (
+// Instantiation
+WrPtr # (
   .ALEN (ALEN),
   .INCR (INCR)
 ) u_DUT (
-  .clk        (clk),
-  .rstn       (rstn),
-  .i_ren      (wen),
-  .o_raddr    (waddr),
-  .o_rptr     (wptr),
-  .i_wptr     (rptr),
-  .o_rempty   (rempty),
-  .o_ram_ren  (ram_ren)
+  .clk          (clk),
+  .rstn         (rstn),
+  .i_wen        (wen),
+  .o_waddr      (waddr),
+  .o_wptr       (wptr),
+  .i_rptr       (rptr),
+  .o_wfull      (wfull),
+  .o_woverflow  (woverflow),
+  .o_ram_wen    (ram_wen)
 );
 
 
@@ -57,29 +60,29 @@ RdPtr # (
 int full_fifo_limit = 2 ** ALEN;
 
 initial begin
-  ren = 0;
-  wptr = 0;
+  wen = 0;
+  rptr = 0;
 
   wait (rstn);
 
   for (int i=0; i < full_fifo_limit; i++) begin
     @(negedge clk);
-    ren = 1;
+    wen = 1;
   end
 
   @(negedge clk);
-  ren = 0;
+  wen = 0;
 
   @(negedge clk);
-  wptr = rptr;
+  rptr = wptr;
 
   for (int i=0; i < full_fifo_limit + 1; i++) begin
     @(negedge clk);
-    ren = 1;
+    wen = 1;
   end
 
   @(negedge clk);
-  ren = 0;
+  wen = 0;
 
   @(negedge clk);
 
@@ -88,8 +91,8 @@ end
 
 initial begin
   $monitor(
-    "[%0t] ren: %b\traddr: 0x%02h\trptr: 0x%02h\trempty: %b\tram_ren: %b",
-    $realtime, ren, raddr, rptr, rempty, ram_ren
+    "[%0t] wen: %b\twaddr: 0x%02h\twptr: 0x%02h\twfull: %b\twoverflow: %b\tram_wen: %b",
+    $realtime, wen, waddr, wptr, wfull, woverflow, ram_wen
     );
 end
 

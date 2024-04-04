@@ -2,10 +2,10 @@
 VIVADO_DIR = /tools/Xilinx/Vivado/2023.2
 
 
-IF_DIR := ../interfaces
-RTL_DIR := ../rtl
-SIM_DIR := ./src
-TCL_DIR := ../tcl
+IF_DIR := ../../interfaces
+RTL_DIR := ../../rtl
+SIM_DIR := ./
+TCL_DIR := ../../tcl
 
 DEFINES := 
 

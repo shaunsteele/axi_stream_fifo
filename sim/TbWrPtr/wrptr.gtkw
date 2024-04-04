@@ -1,0 +1,31 @@
+[*]
+[*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
+[*] Thu Apr  4 05:14:21 2024
+[*]
+[dumpfile] "/home/shaun/repos/axi4_stream_fifo/sim/TbWrPtr/dump.vcd"
+[dumpfile_mtime] "Thu Apr  4 05:08:00 2024"
+[dumpfile_size] 59401
+[savefile] "/home/shaun/repos/axi4_stream_fifo/sim/TbWrPtr/wrptr.gtkw"
+[timestart] 0
+[size] 1850 905
+[pos] -38 -38
+*-19.470152 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 233
+[signals_width] 110
+[sst_expanded] 1
+[sst_vpaned_height] 250
+@28
+TbWrPtr.clk
+TbWrPtr.rstn
+TbWrPtr.wen
+@22
+TbWrPtr.waddr[7:0]
+TbWrPtr.wptr[8:0]
+@23
+TbWrPtr.rptr[8:0]
+@28
+TbWrPtr.wfull
+TbWrPtr.woverflow
+TbWrPtr.ram_wen
+[pattern_trace] 1
+[pattern_trace] 0
