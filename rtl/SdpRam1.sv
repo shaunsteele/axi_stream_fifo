@@ -4,13 +4,10 @@
 `default_nettype none
 
 module SdpRam1 # (
-  parameter int BLEN = 8,
-  parameter int WLEN = 4,
-  parameter int DLEN = BLEN * WLEN,
-  parameter int MLEN = 1024,
-  parameter int ALEN = $clog2(MLEN),
-  parameter bit ENDIAN = 0,
-  parameter bit OREG = 0
+  parameter int DLEN = 8, 
+  parameter int ALEN = 1,
+  // parameter bit ENDIAN = 0,
+  parameter bit OREG = 1
 )(
   input var                     clk,
   input var                     rstn,
@@ -24,53 +21,37 @@ module SdpRam1 # (
   output var logic  [DLEN-1:0]  o_rdata
 );
 
-initial begin
-  assert ($countones(MLEN) == 1)
-  else begin
-    $error("Illegal Memory Depth: 0x%0h", MLEN);
-  end
-end
 
-logic [BLEN-1:0] ram[MLEN];
+logic [DLEN-1:0] ram[2 ** ALEN];
 
 always_ff @(posedge clk) begin
-  assert (i_waddr[1:0] == 0)
-  else begin
-    $warning("Unaligned Memory Write Address: 0x%0h", i_waddr);
-  end
   if (i_wen) begin
-    for (int i=0; i < WLEN; i++) begin
-      ram[i_waddr+i[ALEN-1:0]] <= i_wdata[i*BLEN+:BLEN];
-    end
+      ram[i_waddr[ALEN-1:0]] <= i_wdata[DLEN-1:0];
   end else begin
     ram[i_waddr] <= ram[i_waddr];
   end
 end
 
 generate
-  if (OREG) begin: l_ff
+  if (OREG) begin: g_ff
 
     always_ff @(posedge clk) begin
       if (!rstn) begin
         o_rdata <= 0;
       end else begin
         if (i_ren) begin
-          for (int i=0; i < WLEN; i++) begin
-            o_rdata[i*BLEN+:BLEN] <= ram[i_raddr + i[ALEN-1:0]][BLEN-1:0];
-          end
+          o_rdata <= ram[i_raddr[ALEN-1:0]];
         end else begin
           o_rdata <= o_rdata;
         end
       end
     end
 
-  end else begin: l_comb
+  end else begin: g_comb
 
     always_comb begin
       if (i_ren) begin
-        for (int i=0; i < 4; i++) begin
-          o_rdata[i*BLEN+:BLEN] = ram[i_raddr + i[ALEN-1:0]][BLEN-1:0];
-        end
+          o_rdata = ram[i_raddr[ALEN-1:0]];
       end else begin
         o_rdata = 0;
       end

@@ -1,0 +1,36 @@
+[*]
+[*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
+[*] Thu Apr  4 07:25:44 2024
+[*]
+[dumpfile] "/home/shaun/repos/axi4_stream_fifo/sim/TbFifoCore/dump.vcd"
+[dumpfile_mtime] "Thu Apr  4 07:25:36 2024"
+[dumpfile_size] 6418
+[savefile] "/home/shaun/repos/axi4_stream_fifo/sim/TbFifoCore/fifocore.gtkw"
+[timestart] 0
+[size] 1850 905
+[pos] -1 -1
+*-19.506464 5305000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 233
+[signals_width] 126
+[sst_expanded] 1
+[sst_vpaned_height] 144
+@28
+TbFifoCore.clk
+TbFifoCore.rstn
+TbFifoCore.i_wen
+@22
+TbFifoCore.i_wdata[7:0]
+@28
+TbFifoCore.o_wfull
+TbFifoCore.o_woverflow
+@22
+TbFifoCore.i_wdata[7:0]
+@29
+TbFifoCore.i_ren
+@22
+TbFifoCore.o_rdata[7:0]
+@28
+TbFifoCore.o_rempty
+TbFifoCore.o_runderflow
+[pattern_trace] 1
+[pattern_trace] 0
