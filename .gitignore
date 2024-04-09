@@ -5,3 +5,4 @@ dump.vcd
 *.log
 *.pb
 *.jou
+*.vlt
