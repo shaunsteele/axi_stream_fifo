@@ -1,8 +1,8 @@
 wrptr:
 	make -f WrPtr.mk
 
-rdptr: $1
-	make -f RdPtr.mk $1
+rdptr:
+	make -f RdPtr.mk
 
 fifo:
 	make -f FifoCore.mk
