@@ -4,7 +4,7 @@
 `default_nettype none
 
 module SdpRam1 # (
-  parameter int DLEN = 8, 
+  parameter int DLEN = 8,
   parameter int ALEN = 1,
   // parameter bit ENDIAN = 0,
   parameter bit OREG = 1

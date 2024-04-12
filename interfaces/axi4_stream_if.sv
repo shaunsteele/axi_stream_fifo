@@ -27,7 +27,7 @@ logic [AXI4SDATALEN-1:0]  tdata;
 modport M (
   input aclk, aresetn,
   output tvalid, input tready,
-  output tdata//, 
+  output tdata//,
   // output tstrb, tkeep, tlast,
   // output tid, tdest, tuser
 );
@@ -35,7 +35,7 @@ modport M (
 modport S (
   input aclk, aresetn,
   input tvalid, output tready,
-  input tdata//, 
+  input tdata//,
   // input tstrb, tkeep, tlast,
   // input tid, tdest, tuser
 );

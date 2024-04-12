@@ -19,6 +19,7 @@ module SkidBuffer # (
 
 
 // Valid Buffer Logic
+logic ihs;
 logic valid_buf;
 always_ff @(posedge clk) begin
   if (!rstn) begin
@@ -40,7 +41,6 @@ always_comb begin
 end
 
 // Handshakes
-logic ihs;
 logic ohs;
 always_comb begin
   ihs = i_valid & o_ready;
