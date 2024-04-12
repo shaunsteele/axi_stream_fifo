@@ -2,14 +2,11 @@
 
 `default_nettype none
 
-module TbAxi4SFifo;
+`include "uvm_macros.svh"
 
-parameter int TIMEOUT = 10000;
-initial begin
-  #TIMEOUT;
-  $error("SIMULATION TIMEOUT");
-  $finish(1);
-end
+module TbAxi4SFifo;
+import uvm_pkg::*;
+import uvm_axi4_stream_fifo_pkg::*;
 
 /* Clock Generation */
 parameter int CLKT = 10;
@@ -45,12 +42,17 @@ Axi4SFifo # (
 );
 
 initial begin
-  uvm_config_db#(virtual u_wr)::set(uvm_root::get,"*",vaxi);
+  uvm_config_db#(virtual axi4_stream_if)::set(null,"uvm_test_top","s_axi",u_wr);
+  uvm_config_db#(virtual axi4_stream_if)::set(null,"uvm_test_top","m_axi",u_rd);
 end
 
 initial begin
-  $timeformat(-9, 2, " ns", 20);
-  $monitor("[%06t]", $realtime);
+  run_test();
 end
+
+// initial begin
+//   $timeformat(-9, 2, " ns", 20);
+//   $monitor("[%06t]", $realtime);
+// end
 
 endmodule

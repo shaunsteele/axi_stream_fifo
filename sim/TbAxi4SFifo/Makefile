@@ -20,11 +20,12 @@ SOURCES += $(RTL_DIR)/SAxi4SWr.sv
 SOURCES += $(RTL_DIR)/MAxi4SRd.sv
 SOURCES += $(RTL_DIR)/Axi4SFifo.sv
 
+SOURCES += $(SIM_DIR)/uvm_axi4_stream_fifo_pkg.sv
 SOURCES += $(SIM_DIR)/TbAxi4SFifo.sv
 
 TOP = TbAxi4SFifo
 
-COMP_ARGS := --incr --relax
+COMP_ARGS := --incr --relax -L uvm
 ELAB_ARGS := #-generic_top "TIMEOUT=10000"
 
 .PHONY: simulate
@@ -57,9 +58,12 @@ $(TOP)_snapshot.wdb: .elab.timestamp
 	xvlog --sv $(COMP_ARGS) $(DEFINES) $(SOURCES)
 	touch .comp.timestamp
 
+
+LINT_ARGS :=
+
 .PHONY: lint
 lint:
-	verilator -Wall --timing --lint-only --bbox-unsup verilator.vlt $(SOURCES)
+	verible-verilog-lint $(LINT_ARGS) $(SOURCES)
 
 .PHONY: clean
 clean:

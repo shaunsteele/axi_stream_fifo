@@ -5,9 +5,9 @@
 
 class m_axi4s_agent extends uvm_agent;
 
-m_axi4s_driver    drv;
+// m_axi4s_driver    drv;
 m_axi4s_sequencer sqr;
-m_axi4s_monitor   mon;
+// s_axi4s_monitor   mon;
 
 `uvm_component_utils(m_axi4s_agent)
 
@@ -19,11 +19,11 @@ function void build_phase(uvm_phase phase);
   super.build_phase(phase);
 
   if (get_is_active() == UVM_ACTIVE) begin
-    drv = m_axi4s_driver::type_id::create("drv", this);
+    // drv = m_axi4s_driver::type_id::create("drv", this);
     sqr = m_axi4s_sequencer::type_id::create("sqr", this);
   end
 
-  mon = m_axi4s_monitor::type_id::create("mon", this);
+  // mon = s_axi4s_monitor::type_id::create("mon", this);
 endfunction
 
 function void connect_phase(uvm_phase phase);
